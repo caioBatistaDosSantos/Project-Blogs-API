@@ -55,11 +55,16 @@ const getUsersAll = async (_req, res) => {
   return res.status(HTTP_OK_STATUS).json(Users);
 };
 
-const getUserById = async (req, res) => {
-  const Users = await userService.getUsersAll();
-  // por equanto 
+const getUserById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
 
-  return res.status(HTTP_OK_STATUS).json(Users);
+    const User = await userService.getUserById(id); 
+
+    return res.status(HTTP_OK_STATUS).json(User);
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = {
