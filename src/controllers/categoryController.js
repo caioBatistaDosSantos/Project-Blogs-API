@@ -1,5 +1,9 @@
 const categoryService = require('../services/categoryService');
-const { HTTP_BAD_REEQUEST_STATUS, HTTP_CREATED_STATUS } = require('../utils/status-HTTP');
+const {
+  HTTP_OK_STATUS,
+  HTTP_BAD_REEQUEST_STATUS,
+  HTTP_CREATED_STATUS,
+} = require('../utils/status-HTTP');
 
 const createCategory = async (req, res, next) => {
   try {
@@ -17,6 +21,13 @@ const createCategory = async (req, res, next) => {
   }
 };
 
+const getCategoriesAll = async (_req, res) => {
+  const Categories = await categoryService.getCategoriesAll();
+
+  return res.status(HTTP_OK_STATUS).json(Categories);
+};
+
 module.exports = {
   createCategory,
+  getCategoriesAll,
 };
