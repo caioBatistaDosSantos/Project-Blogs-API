@@ -2,6 +2,7 @@ const postService = require('../services/postService');
 const {
   HTTP_BAD_REEQUEST_STATUS,
   HTTP_CREATED_STATUS,
+  HTTP_OK_STATUS,
 } = require('../utils/status-HTTP');
 
 const createPost = async (req, res, next) => {
@@ -23,6 +24,13 @@ const createPost = async (req, res, next) => {
   }
 };
 
+const getPost = async (_req, res) => {
+  const posts = await postService.getPost();
+
+  return res.status(HTTP_OK_STATUS).json(posts);
+};
+
 module.exports = {
   createPost,
+  getPost,
 };
