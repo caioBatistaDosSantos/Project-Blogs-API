@@ -42,8 +42,33 @@ const getPostById = async (req, res, next) => {
   }
 };
 
+const updatePostById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const token = req.user;
+    const { title, content } = req.body;
+
+    if (!title || !content) {
+      return res.status(HTTP_BAD_REEQUEST_STATUS).json({
+        message: 'Some required fields are missing',
+      });
+    }
+
+    await postService.updatePostById(
+      id, token.data.id, title, content,
+    );
+    
+    const updatedPost = await postService.getPostById(id);
+
+    return res.status(HTTP_OK_STATUS).json(updatedPost);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createPost,
   getPost,
   getPostById,
+  updatePostById,
 };

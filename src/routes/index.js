@@ -18,4 +18,6 @@ router.post('/user', validateUser, userController.createUser);
 router.post('/categories', validateToken, categoryController.createCategory);
 router.post('/post', validateToken, postController.createPost);
 
+router.put('/post/:id', validateToken, postController.updatePostById);
+
 module.exports = router;

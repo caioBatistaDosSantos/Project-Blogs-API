@@ -5,6 +5,7 @@ const objectError = require('../utils/objectError');
 const {
   HTTP_BAD_REEQUEST_STATUS,
   HTTP_NOT_FOUND_STATUS,
+  HTTP_UNAUTHORIZED_STATUS,
 } = require('../utils/status-HTTP');
 
 const sequelize = new Sequelize(config.development);
@@ -55,8 +56,22 @@ const getPostById = async (id) => {
   return post;
 };
 
+const updatePostById = async (id, tokenId, title, content) => {
+  const post = await BlogPost.findByPk(id);
+
+  if (!post) throw objectError(HTTP_NOT_FOUND_STATUS, 'Post does not exist');
+
+  if (post.userId !== tokenId) throw objectError(HTTP_UNAUTHORIZED_STATUS, 'Unauthorized user');
+
+  await BlogPost.update(
+    { title, content },
+    { where: { id } },
+  );
+};
+
 module.exports = {
   createPost,
   getPost,
   getPostById,
+  updatePostById,
 };
