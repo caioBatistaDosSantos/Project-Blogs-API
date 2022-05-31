@@ -2,7 +2,10 @@ const Sequelize = require('sequelize');
 const config = require('../database/config/config');
 const { BlogPost, PostCategory, User, Category } = require('../database/models');
 const objectError = require('../utils/objectError');
-const { HTTP_BAD_REEQUEST_STATUS } = require('../utils/status-HTTP');
+const {
+  HTTP_BAD_REEQUEST_STATUS,
+  HTTP_NOT_FOUND_STATUS,
+} = require('../utils/status-HTTP');
 
 const sequelize = new Sequelize(config.development);
 
@@ -38,7 +41,22 @@ const getPost = async () => {
   return posts;
 };
 
+const getPostById = async (id) => {
+  const post = await BlogPost.findOne({
+    where: { id },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', attributes: { exclude: ['PostCategory'] } },
+    ],
+  });
+
+  if (!post) throw objectError(HTTP_NOT_FOUND_STATUS, 'Post does not exist');
+
+  return post;
+};
+
 module.exports = {
   createPost,
   getPost,
+  getPostById,
 };
