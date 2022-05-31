@@ -4,6 +4,7 @@ const {
   HTTP_BAD_REEQUEST_STATUS,
   HTTP_OK_STATUS,
   HTTP_CREATED_STATUS,
+  HTTP_NO_CONTENT_STATUS,
 } = require('../utils/status-HTTP');
 
 const loginUser = async (req, res, next) => {
@@ -59,9 +60,18 @@ const getUserById = async (req, res, next) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  const token = req.user;
+
+  await userService.deleteUser(token.data.id);
+
+  return res.status(HTTP_NO_CONTENT_STATUS).send();
+};
+
 module.exports = {
   loginUser,
   createUser,
   getUsersAll,
   getUserById,
+  deleteUser,
 };
