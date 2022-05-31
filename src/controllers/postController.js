@@ -3,6 +3,7 @@ const {
   HTTP_BAD_REEQUEST_STATUS,
   HTTP_CREATED_STATUS,
   HTTP_OK_STATUS,
+  HTTP_NO_CONTENT_STATUS,
 } = require('../utils/status-HTTP');
 
 const createPost = async (req, res, next) => {
@@ -66,9 +67,23 @@ const updatePostById = async (req, res, next) => {
   }
 };
 
+const deletePostById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const token = req.user;
+
+    await postService.deletePostById(id, token.data.id);
+
+    return res.status(HTTP_NO_CONTENT_STATUS).send();
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createPost,
   getPost,
   getPostById,
   updatePostById,
+  deletePostById,
 };
