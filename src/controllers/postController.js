@@ -80,10 +80,19 @@ const deletePostById = async (req, res, next) => {
   }
 };
 
+const getPostBySearch = async (req, res) => {
+  const { q } = req.query;
+
+  const posts = await postService.getPostBySearch(q);
+
+  return res.status(HTTP_OK_STATUS).json(posts);
+};
+
 module.exports = {
   createPost,
   getPost,
   getPostById,
   updatePostById,
   deletePostById,
+  getPostBySearch,
 };

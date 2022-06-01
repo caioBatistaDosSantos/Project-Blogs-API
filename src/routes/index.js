@@ -11,6 +11,7 @@ router.get('/user', validateToken, userController.getUsersAll);
 router.get('/user/:id', validateToken, userController.getUserById);
 router.get('/categories', validateToken, categoryController.getCategoriesAll);
 router.get('/post', validateToken, postController.getPost);
+router.get('/post/search', validateToken, postController.getPostBySearch);
 router.get('/post/:id', validateToken, postController.getPostById);
 
 router.post('/login', userController.loginUser);
