@@ -28,7 +28,7 @@ const createPost = async (title, content, categoryIds, userId) => {
     });
   } catch (error) {
     console.log(error);
-    throw objectError(HTTP_BAD_REEQUEST_STATUS, 'invalid request');
+    throw objectError(HTTP_BAD_REEQUEST_STATUS, '"categoryIds" not found');
   }
 };
 
