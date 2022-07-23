@@ -20,7 +20,7 @@
   - `npm install`
 3. Suba o container Docker com o comando:
   - `docker-compose up -d --build`
-4. Concte-se a um gerenciador de banco de dados com os seguintes dados:
+4. Conecte-se a um gerenciador de banco de dados com os seguintes dados:
   - host='localhost',
   - user='root',
   - port='3306',
